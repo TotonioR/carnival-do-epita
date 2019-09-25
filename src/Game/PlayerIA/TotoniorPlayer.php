@@ -46,7 +46,9 @@ class TotoniorPlayer extends Player
         $len1 = count($side);
         $lastscore = $this->result->getLastScoreFor($this->mySide);
         $lastmove =  $this->result->getLastChoiceFor($this->mySide);
-        $olastmove =  $this->result->getLastChoiceFor($this->opponentSide);
+
+        // If lose then change algo, predict the move that he will do
+        // Use last 2 moves of opponent to predict the new move to do
         if ($lastscore == 0)
             if ($lastmove == 'rock') {
                 if ($len1 > 2 and $side[$len1 - 2] == 'scissors')
@@ -65,7 +67,7 @@ class TotoniorPlayer extends Player
                     return parent::rockChoice();
             }
 
-
+        // Else Use the last choice of opponent and the prelast  
         if ($this->result->getLastChoiceFor($this->opponentSide) == 'paper')
             if ($len > 2 and $opponent[$len - 2] == 'rock')
                 return parent::rockChoice();
