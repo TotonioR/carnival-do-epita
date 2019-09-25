@@ -46,11 +46,20 @@ class TotoniorPlayer extends Player
         $lastmove =  $this->result->getLastChoiceFor($this->mySide);
         if ($lastscore == 0)
             if ($lastmove == 'paper')
-                return parent::scissorsChoice();
+                if ($len > 2 and $opponent[$len - 2] == 'rock')
+                    return parent::paperChoice();
+                else
+                    return parent::scissorsChoice();
             else if ($lastmove == 'rock')
-                return parent::paperChoice();
+                if ($len > 2 and $opponent[$len - 2] == 'scissors')
+                    return parent::rockChoice();
+                else
+                    return parent::paperChoice();
             else
-                return parent::rockChoice();
+                if ($len > 2 and $opponent[$len - 2] == 'paper')
+                    return parent::scissorsChoice();
+                else
+                    return parent::rockChoice();
 
         if ($this->result->getLastChoiceFor($this->opponentSide) == 'paper')
             if ($len > 2 and $opponent[$len - 2] == 'rock')
