@@ -40,11 +40,18 @@ class TotoniorPlayer extends Player
         // -------------------------------------    -----------------------------------------------------
         // How can i display the result of each round ? $this->prettyDisplay()
         // -------------------------------------    -----------------------------------------------------
-        $this->prettyDisplay();
+        $opponent = $this->result->getChoicesFor($this->opponentSide);
+        $len = count($opponent);
         if ($this->result->getLastChoiceFor($this->opponentSide) == 'paper')
-            return parent::scissorsChoice();
+            if ($len > 2 and $opponent[$len - 2] == 'rock')
+                return parent::rockChoice();
+            else
+                return parent::scissorsChoice();
         else if ($this->result->getLastChoiceFor($this->opponentSide) == 'scissors')
-            return parent::rockChoice();
+            if ($len > 2 and $opponent[$len - 2] == 'paper')
+                return parent::paperChoice();
+            else
+                return parent::rockChoice();
         else
             return parent::paperChoice();
   }
