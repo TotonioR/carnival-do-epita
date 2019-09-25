@@ -40,26 +40,30 @@ class TotoniorPlayer extends Player
         // -------------------------------------    -----------------------------------------------------
         // How can i display the result of each round ? $this->prettyDisplay()
         // -------------------------------------    -----------------------------------------------------
+        $side = $this->result->getChoicesFor($this->mySide);
         $opponent = $this->result->getChoicesFor($this->opponentSide);
         $len = count($opponent);
+        $len1 = count($side);
         $lastscore = $this->result->getLastScoreFor($this->mySide);
         $lastmove =  $this->result->getLastChoiceFor($this->mySide);
+        $olastmove =  $this->result->getLastChoiceFor($this->opponentSide);
         if ($lastscore == 0)
-            if ($lastmove == 'paper')
-                if ($len > 2 and $opponent[$len - 2] == 'rock')
-                    return parent::paperChoice();
+            if ($lastmove == 'rock')
+                if ($len1 > 2 and $side[$len1 - 2] == 'scissors')
+                    return parent::rockChoice();
                 else
                     return parent::scissorsChoice();
-            else if ($lastmove == 'rock')
-                if ($len > 2 and $opponent[$len - 2] == 'scissors')
-                    return parent::rockChoice();
+            else if ($lastmove == 'scissors')
+                if ($len1 > 2 and $side[$len1 - 2] == 'paper')
+                    return parent::scissorsChoice();
                 else
                     return parent::paperChoice();
             else
-                if ($len > 2 and $opponent[$len - 2] == 'paper')
-                    return parent::scissorsChoice();
+                if ($len1 > 2 and $side[$len1 - 2] == 'rock')
+                    return parent::paperChoice();
                 else
                     return parent::rockChoice();
+
 
         if ($this->result->getLastChoiceFor($this->opponentSide) == 'paper')
             if ($len > 2 and $opponent[$len - 2] == 'rock')
